@@ -46,12 +46,11 @@ document.getElementById("vendorForm").addEventListener("submit", e => {
   document.getElementById("msg").innerText = "Submitting...";
   fetch(SCRIPT_URL, {
     method: 'POST',
-    mode: 'no-cors', // <-- ye line add kar
     body: JSON.stringify(data)
   })
-  .then(res => res.text())
+  .then(res => res.json()) // <-- json kar de
   .then(data => {
-    document.getElementById("msg").innerText = "Form Submitted Successfully!";
+    document.getElementById("msg").innerText = "✅ Form Submitted Successfully!";
     document.getElementById("vendorForm").reset();
   })
   .catch(err => {
