@@ -1,146 +1,82 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hi">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AdvikMart Vendor Signup</title>
-  <style>
-    * { box-sizing: border-box; }
-    body { 
-      font-family: 'Arial', sans-serif; 
-      background: linear-gradient(135deg, #ff6b6b, #d32f2f); 
-      padding: 20px; 
-      margin: 0;
-    }
-    .container { 
-      max-width: 650px; 
-      margin: 20px auto; 
-      background: white; 
-      padding: 30px; 
-      border-radius: 15px; 
-      box-shadow: 0 10px 30px rgba(0,0,0,0.2); 
-    }
-    h2 { 
-      text-align: center; 
-      color: #d32f2f; 
-      margin-bottom: 10px;
-      font-size: 28px;
-    }
-    .subtitle {
-      text-align: center;
-      color: #666;
-      margin-bottom: 25px;
-    }
-    input, select { 
-      width: 100%; 
-      padding: 12px; 
-      margin: 10px 0; 
-      border: 2px solid #ddd; 
-      border-radius: 8px; 
-      font-size: 15px;
-      transition: border 0.3s;
-    }
-    input:focus, select:focus {
-      border-color: #d32f2f;
-      outline: none;
-    }
-    button { 
-      background: #d32f2f; 
-      color: white; 
-      padding: 14px; 
-      border: none; 
-      width: 100%; 
-      border-radius: 8px; 
-      font-size: 18px; 
-      font-weight: bold;
-      cursor: pointer; 
-      margin-top: 15px;
-      transition: background 0.3s;
-    }
-    button:hover { 
-      background: #b71c1c; 
-    }
-    button:disabled {
-      background: #ccc;
-      cursor: not-allowed;
-    }
-    #msg { 
-      text-align: center; 
-      margin-top: 15px; 
-      font-weight: bold;
-      font-size: 16px;
-    }
-    .required { color: red; }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AdvikMart - Vendor Registration</title>
+<style>
+  body{font-family:Arial; background:#f5f5f5; padding:20px}
+  .container{max-width:600px; margin:auto; background:white; padding:20px; border-radius:10px; box-shadow:0 0 10px #ccc}
+  h2{text-align:center; color:#2c3e50}
+  input, select, textarea{width:100%; padding:10px; margin:8px 0; border:1px solid #ddd; border-radius:5px; box-sizing:border-box}
+  button{width:100%; padding:12px; background:#27ae60; color:white; border:none; border-radius:5px; font-size:16px; cursor:pointer}
+  button:hover{background:#219150}
+  .success{display:none; color:green; text-align:center; padding:10px; background:#d4edda; border-radius:5px; margin-top:10px}
+</style>
 </head>
 <body>
+
 <div class="container">
-  <h2>AdvikMart Vendor Signup</h2>
-  <p class="subtitle">Join our marketplace and grow your business</p>
-  
+  <h2>AdvikMart Vendor Registration</h2>
   <form id="vendorForm">
-    <input type="text" name="shop" placeholder="Shop Name *" required>
-    <input type="text" name="name" placeholder="Owner Name *" required>
-    <input type="tel" name="mobile" placeholder="Mobile Number *" required pattern="[0-9]{10}">
-    <input type="tel" name="whatsapp" placeholder="WhatsApp Number">
-    <input type="email" name="email" placeholder="Email Address">
-    <input type="text" name="address" placeholder="Shop Address">
-    <input type="text" name="city" placeholder="City">
-    <input type="text" name="pincode" placeholder="Pincode" pattern="[0-9]{6}">
-    
-    <select name="category" required>
-      <option value="">Select Product Category *</option>
-      <option>Kirana / Grocery</option>
-      <option>Garments / Clothing</option>
+    <input type="text" id="shop" placeholder="Shop Name *" required>
+    <input type="text" id="name" placeholder="Owner Name *" required>
+    <input type="tel" id="mobile" placeholder="Mobile Number *" required>
+    <input type="tel" id="whatsapp" placeholder="Whatsapp Number">
+    <input type="email" id="email" placeholder="Email">
+    <textarea id="address" placeholder="Shop Address"></textarea>
+    <input type="text" id="city" placeholder="City *" required>
+    <input type="text" id="pincode" placeholder="Pincode">
+    <select id="category">
+      <option value="">Select Category</option>
+      <option>Grocery</option>
+      <option>Clothes</option>
       <option>Electronics</option>
-      <option>Mobile & Accessories</option>
-      <option>Cosmetics</option>
-      <option>Stationery</option>
+      <option>Food</option>
       <option>Other</option>
     </select>
-    
-    <input type="text" name="gst" placeholder="GST Number (Optional)">
-    
-    <button type="submit" id="submitBtn">Submit Application</button>
+    <input type="text" id="gst" placeholder="GST Number">
+    <button type="submit">Submit Vendor Details</button>
   </form>
-  
-  <p id="msg"></p>
+  <div class="success" id="msg">✅ Form submit ho gaya! Hum 24 ghante me contact karenge.</div>
 </div>
 
 <script>
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzHQRPXh7DglDi4MwvF3kDBvT96xxWHsfDDRDP7TlpUCy7QWZAC6P2sj_MwG8cXSu-Q/exec";
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzHQRPXh7DglDi4MwvF3kDBvT96xxWHsfDDRDP7TlpUCy7QWZAC6P2sj_MwG8cXSu-Q/exec"; // <-- STEP 1: YAHAN URL DAAL
 
-const form = document.getElementById("vendorForm");
-const msg = document.getElementById("msg");
-const btn = document.getElementById("submitBtn");
-
-form.addEventListener("submit", e => {
+document.getElementById("vendorForm").addEventListener("submit", function(e){
   e.preventDefault();
-  
-  btn.disabled = true;
-  btn.innerText = "Submitting...";
-  msg.style.color = "blue";
-  msg.innerText = "Submitting... Please wait";
-  
-  let formData = new FormData(form);
-  let data = Object.fromEntries(formData);
-  
-  https://script.google.com/macros/s/AKfycbzHQRPXh7DglDi4MwvF3kDBvT96xxWHsfDDRDP7TlpUCy7QWZAC6P2sj_MwG8cXSu-Q/exec
-  .then(() => {
-    // no-cors me response nahi aata, isliye direct success maan lete hain
-    msg.style.color = "green";
-    msg.innerText = "✅ Form Submitted Successfully!";
-    form.reset();
-  })
-  .catch(err => {
-    msg.style.color = "red";
-    msg.innerText = "❌ Error! Please try again.";
-  })
-  .finally(() => {
-    btn.disabled = false;
-    btn.innerText = "Submit Application";
+
+  let formData = {
+    shop: document.getElementById("shop").value,
+    name: document.getElementById("name").value,
+    mobile: document.getElementById("mobile").value,
+    whatsapp: document.getElementById("whatsapp").value,
+    email: document.getElementById("email").value,
+    address: document.getElementById("address").value,
+    city: document.getElementById("city").value,
+    pincode: document.getElementById("pincode").value,
+    category: document.getElementById("category").value,
+    gst: document.getElementById("gst").value
+  };
+
+  // Data bhejne ka kaam
+  fetch(SCRIPT_URL, {
+    method: "POST",
+    mode: "no-cors", // CORS error hatane ke liye
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify(formData)
   });
+
+  // Turant success dikha do
+  document.getElementById("msg").style.display = "block";
+  document.getElementById("vendorForm").reset(); // form khali
+
+  setTimeout(() => {
+    document.getElementById("msg").style.display = "none";
+  }, 4000);
 });
 </script>
+
 </body>
 </html>
