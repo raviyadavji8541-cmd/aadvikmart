@@ -126,10 +126,10 @@ form.addEventListener("submit", e => {
   let data = Object.fromEntries(formData);
   
   fetch(SCRIPT_URL, {
-    method: 'POST',
-    mode: 'no-cors', // <-- YE SABSE IMPORTANT HAI
-    body: JSON.stringify(data)
-  })
+  method: "POST",
+  mode: "no-cors" // <-- YE LINE ADD KAR
+  body: JSON.stringify(formData)
+})
   .then(() => {
     // no-cors me response nahi aata, isliye direct success maan lete hain
     msg.style.color = "green";
