@@ -42,30 +42,30 @@
 </div>
 
 <script>
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzGfz1q-jBCpTXcBZ_GPzFmvPtFtqAQMcXnxq-5NrlM-p2aBvh1SPzD_j2sbUGszCL39g/exec"; // <-- STEP 1: YAHAN URL DAAL
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzGfz1q-jBCpTXcBZ_GPzFmvPtFtqAQMcXnxq-5NrlM-p2aBvh1SPzD_j2sbUGszCL39g/exec"; // /exec wala
 
-document.getElementById("vendorForm").addEventListener("submit", function(e){
+document.getElementById("f").onsubmit = async (e)=>{
   e.preventDefault();
-
   let formData = {
-    shop: document.getElementById("shop").value,
-    name: document.getElementById("name").value,
-    mobile: document.getElementById("mobile").value,
-    whatsapp: document.getElementById("whatsapp").value,
-    email: document.getElementById("email").value,
-    address: document.getElementById("address").value,
-    city: document.getElementById("city").value,
-    pincode: document.getElementById("pincode").value,
-    category: document.getElementById("category").value,
-    gst: document.getElementById("gst").value
+    shop: shop.value,
+    name: name.value, 
+    mobile: mobile.value,
+    whatsapp: "",
+    email: "",
+    address: "",
+    city: city.value,
+    pincode: "",
+    category: "",
+    gst: ""
   };
-
-  // Data bhejne ka kaam
- fetch(SCRIPT_URL, {
-      method: "POST",
-      mode: "no-cors", // <-- YE LINE ZAROORI HAI
-      body: JSON.stringify(formData)
-    });
+  
+  await fetch(SCRIPT_URL, {
+    method: "POST",
+    mode: "no-cors", // YE ZAROORI HAI
+    body: JSON.stringify(formData)
+  });
+  alert("Submit ho gaya");
+}
 
   // Turant success dikha do
   document.getElementById("msg").style.display = "block";
