@@ -108,7 +108,6 @@
 </div>
 
 <script>
-// 👇👇 YAHAN APNA APPS SCRIPT WALA WEB APP URL PASTE KARNA HAI 👇👇
 const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxj4iKZAT_-zkTrWFGxD_CQNFY9yvhEophs1jP9kxUnHs6hn1c-TV8rnPwevuhP788X/exec";
 
 const form = document.getElementById("vendorForm");
@@ -126,25 +125,20 @@ form.addEventListener("submit", e => {
   let formData = new FormData(form);
   let data = Object.fromEntries(formData);
   
- fetch(SCRIPT_URL + "?callback=ctrlq", {
+  fetch(SCRIPT_URL, {
     method: 'POST',
-    mode: 'no-cors', // <-- no-cors wapas kar de
+    mode: 'no-cors', // <-- YE SABSE IMPORTANT HAI
     body: JSON.stringify(data)
   })
-  .then(response => {
-    if(response.result == "success"){
-      msg.style.color = "green";
-      msg.innerText = "✅ Form Submitted Successfully!";
-      form.reset();
-    } else {
-      msg.style.color = "red";
-      msg.innerText = "❌ Error: " + response.error;
-    }
+  .then(() => {
+    // no-cors me response nahi aata, isliye direct success maan lete hain
+    msg.style.color = "green";
+    msg.innerText = "✅ Form Submitted Successfully!";
+    form.reset();
   })
   .catch(err => {
     msg.style.color = "red";
-    msg.innerText = "❌ Network Error! Check internet and try again.";
-    console.log(err);
+    msg.innerText = "❌ Error! Please try again.";
   })
   .finally(() => {
     btn.disabled = false;
