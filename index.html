@@ -1,64 +1,155 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>AdvikMart Vendor Signup</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
-    body { font-family: Arial; background:#f4f4f4; padding:20px; }
-    .container { max-width:600px; margin:auto; background:white; padding:20px; border-radius:10px; box-shadow:0 0 10px #ccc; }
-    h2 { text-align:center; color:#d32f2f; }
-    input, select { width:100%; padding:10px; margin:8px 0; border:1px solid #ccc; border-radius:5px; }
-    button { background:#d32f2f; color:white; padding:12px; border:none; width:100%; border-radius:5px; font-size:16px; cursor:pointer; }
-    button:hover { background:#b71c1c; }
+    * { box-sizing: border-box; }
+    body { 
+      font-family: 'Arial', sans-serif; 
+      background: linear-gradient(135deg, #ff6b6b, #d32f2f); 
+      padding: 20px; 
+      margin: 0;
+    }
+    .container { 
+      max-width: 650px; 
+      margin: 20px auto; 
+      background: white; 
+      padding: 30px; 
+      border-radius: 15px; 
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2); 
+    }
+    h2 { 
+      text-align: center; 
+      color: #d32f2f; 
+      margin-bottom: 10px;
+      font-size: 28px;
+    }
+    .subtitle {
+      text-align: center;
+      color: #666;
+      margin-bottom: 25px;
+    }
+    input, select { 
+      width: 100%; 
+      padding: 12px; 
+      margin: 10px 0; 
+      border: 2px solid #ddd; 
+      border-radius: 8px; 
+      font-size: 15px;
+      transition: border 0.3s;
+    }
+    input:focus, select:focus {
+      border-color: #d32f2f;
+      outline: none;
+    }
+    button { 
+      background: #d32f2f; 
+      color: white; 
+      padding: 14px; 
+      border: none; 
+      width: 100%; 
+      border-radius: 8px; 
+      font-size: 18px; 
+      font-weight: bold;
+      cursor: pointer; 
+      margin-top: 15px;
+      transition: background 0.3s;
+    }
+    button:hover { 
+      background: #b71c1c; 
+    }
+    button:disabled {
+      background: #ccc;
+      cursor: not-allowed;
+    }
+    #msg { 
+      text-align: center; 
+      margin-top: 15px; 
+      font-weight: bold;
+      font-size: 16px;
+    }
+    .required { color: red; }
   </style>
 </head>
 <body>
 <div class="container">
   <h2>AdvikMart Vendor Signup</h2>
+  <p class="subtitle">Join our marketplace and grow your business</p>
+  
   <form id="vendorForm">
     <input type="text" name="shop" placeholder="Shop Name *" required>
     <input type="text" name="name" placeholder="Owner Name *" required>
-    <input type="tel" name="mobile" placeholder="Mobile Number *" required>
+    <input type="tel" name="mobile" placeholder="Mobile Number *" required pattern="[0-9]{10}">
     <input type="tel" name="whatsapp" placeholder="WhatsApp Number">
-    <input type="email" name="email" placeholder="Email">
+    <input type="email" name="email" placeholder="Email Address">
     <input type="text" name="address" placeholder="Shop Address">
     <input type="text" name="city" placeholder="City">
-    <input type="text" name="pincode" placeholder="Pincode">
-    <select name="category">
-      <option value="">Select Category</option>
-      <option>Kirana</option>
-      <option>Garments</option>
+    <input type="text" name="pincode" placeholder="Pincode" pattern="[0-9]{6}">
+    
+    <select name="category" required>
+      <option value="">Select Product Category *</option>
+      <option>Kirana / Grocery</option>
+      <option>Garments / Clothing</option>
       <option>Electronics</option>
-      <option>Mobile</option>
+      <option>Mobile & Accessories</option>
+      <option>Cosmetics</option>
+      <option>Stationery</option>
       <option>Other</option>
     </select>
+    
     <input type="text" name="gst" placeholder="GST Number (Optional)">
-    <button type="submit">Submit Application</button>
+    
+    <button type="submit" id="submitBtn">Submit Application</button>
   </form>
-  <p id="msg" style="text-align:center; color:green; margin-top:10px;"></p>
+  
+  <p id="msg"></p>
 </div>
 
 <script>
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxj4iKZAT_-zkTrWFGxD_CQNFY9yvhEophs1jP9kxUnHs6hn1c-TV8rnPwevuhP788X/exec"; // <-- Yaha apna URL paste karna hai
+// 👇👇 YAHAN APNA APPS SCRIPT WALA WEB APP URL PASTE KARNA HAI 👇👇
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxj4iKZAT_-zkTrWFGxD_CQNFY9yvhEophs1jP9kxUnHs6hn1c-TV8rnPwevuhP788X/exec";
 
-document.getElementById("vendorForm").addEventListener("submit", e => {
+const form = document.getElementById("vendorForm");
+const msg = document.getElementById("msg");
+const btn = document.getElementById("submitBtn");
+
+form.addEventListener("submit", e => {
   e.preventDefault();
-  document.getElementById("msg").innerText = "Submitting...";
+  
+  btn.disabled = true;
+  btn.innerText = "Submitting...";
+  msg.style.color = "blue";
+  msg.innerText = "Submitting... Please wait";
+  
+  let formData = new FormData(form);
+  let data = Object.fromEntries(formData);
+  
   fetch(SCRIPT_URL, {
     method: 'POST',
-    headers: { "Content-Type": "application/json" }, // <-- YE LINE ADD KAR
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data)
   })
   .then(res => res.json())
-  .then(data => {
-    document.getElementById("msg").innerText = "✅ Form Submitted Successfully!";
-    document.getElementById("vendorForm").reset();
+  .then(response => {
+    if(response.result == "success"){
+      msg.style.color = "green";
+      msg.innerText = "✅ Form Submitted Successfully!";
+      form.reset();
+    } else {
+      msg.style.color = "red";
+      msg.innerText = "❌ Error: " + response.error;
+    }
   })
   .catch(err => {
-    document.getElementById("msg").innerText = "❌ Error! Try again.";
-  });
-  .catch(err => {
-    document.getElementById("msg").innerText = "Error! Try again.";
+    msg.style.color = "red";
+    msg.innerText = "❌ Network Error! Check internet and try again.";
+    console.log(err);
+  })
+  .finally(() => {
+    btn.disabled = false;
+    btn.innerText = "Submit Application";
   });
 });
 </script>
