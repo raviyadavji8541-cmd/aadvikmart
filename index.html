@@ -126,12 +126,11 @@ form.addEventListener("submit", e => {
   let formData = new FormData(form);
   let data = Object.fromEntries(formData);
   
-  fetch(SCRIPT_URL, {
+ fetch(SCRIPT_URL + "?callback=ctrlq", {
     method: 'POST',
-    headers: { "Content-Type": "application/json" },
+    mode: 'no-cors', // <-- no-cors wapas kar de
     body: JSON.stringify(data)
   })
-  .then(res => res.json())
   .then(response => {
     if(response.result == "success"){
       msg.style.color = "green";
