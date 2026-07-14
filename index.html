@@ -1,25 +1,62 @@
 <!DOCTYPE html>
-<html lang="hi">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AdvikMart - Vendor Signup</title>
+  <title>AdvikMart Vendor Signup</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
-    body { font-family: Arial; background: #f5f5f5; padding: 20px; }
-    .container { max-width: 400px; margin: auto; background: white; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px #ccc; }
-    h2 { color: #e63946; text-align: center; }
-    input, button { width: 100%; padding: 12px; margin: 8px 0; border: 1px solid #ddd; border-radius: 5px; }
-    button { background: #e63946; color: white; border: none; font-size: 16px; cursor: pointer; }
+    body { font-family: Arial; background:#f4f4f4; padding:20px; }
+    .container { max-width:600px; margin:auto; background:white; padding:20px; border-radius:10px; box-shadow:0 0 10px #ccc; }
+    h2 { text-align:center; color:#d32f2f; }
+    input, select { width:100%; padding:10px; margin:8px 0; border:1px solid #ccc; border-radius:5px; }
+    button { background:#d32f2f; color:white; padding:12px; border:none; width:100%; border-radius:5px; font-size:16px; cursor:pointer; }
+    button:hover { background:#b71c1c; }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h2>AdvikMart Vendor Signup</h2>
-    <input type="text" placeholder="Shop Name" id="shop">
-    <input type="text" placeholder="Your Name" id="name">
-    <input type="number" placeholder="Mobile Number" id="mobile">
-    <input type="text" placeholder="Address" id="address">
-    <button onclick="alert('Form Submitted!')">Submit</button>
-  </div>
+<div class="container">
+  <h2>AdvikMart Vendor Signup</h2>
+  <form id="vendorForm">
+    <input type="text" name="shop" placeholder="Shop Name *" required>
+    <input type="text" name="name" placeholder="Owner Name *" required>
+    <input type="tel" name="mobile" placeholder="Mobile Number *" required>
+    <input type="tel" name="whatsapp" placeholder="WhatsApp Number">
+    <input type="email" name="email" placeholder="Email">
+    <input type="text" name="address" placeholder="Shop Address">
+    <input type="text" name="city" placeholder="City">
+    <input type="text" name="pincode" placeholder="Pincode">
+    <select name="category">
+      <option value="">Select Category</option>
+      <option>Kirana</option>
+      <option>Garments</option>
+      <option>Electronics</option>
+      <option>Mobile</option>
+      <option>Other</option>
+    </select>
+    <input type="text" name="gst" placeholder="GST Number (Optional)">
+    <button type="submit">Submit Application</button>
+  </form>
+  <p id="msg" style="text-align:center; color:green; margin-top:10px;"></p>
+</div>
+
+<script>
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxj4iKZAT_-zkTrWFGxD_CQNFY9yvhEophs1jP9kxUnHs6hn1c-TV8rnPwevuhP788X/exec"; // <-- Yaha apna URL paste karna hai
+
+document.getElementById("vendorForm").addEventListener("submit", e => {
+  e.preventDefault();
+  document.getElementById("msg").innerText = "Submitting...";
+  fetch(SCRIPT_URL, {
+    method: 'POST',
+    body: new FormData(document.getElementById("vendorForm")),
+  })
+  .then(res => res.text())
+  .then(data => {
+    document.getElementById("msg").innerText = "Form Submitted Successfully!";
+    document.getElementById("vendorForm").reset();
+  })
+  .catch(err => {
+    document.getElementById("msg").innerText = "Error! Try again.";
+  });
+});
+</script>
 </body>
 </html>
