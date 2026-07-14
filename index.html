@@ -125,11 +125,7 @@ form.addEventListener("submit", e => {
   let formData = new FormData(form);
   let data = Object.fromEntries(formData);
   
-  fetch(SCRIPT_URL, {
-  method: "POST",
-  mode: "no-cors" // <-- YE LINE ADD KAR
-  body: JSON.stringify(formData)
-})
+  https://script.google.com/macros/s/AKfycbzHQRPXh7DglDi4MwvF3kDBvT96xxWHsfDDRDP7TlpUCy7QWZAC6P2sj_MwG8cXSu-Q/exec
   .then(() => {
     // no-cors me response nahi aata, isliye direct success maan lete hain
     msg.style.color = "green";
