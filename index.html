@@ -46,13 +46,17 @@ document.getElementById("vendorForm").addEventListener("submit", e => {
   document.getElementById("msg").innerText = "Submitting...";
   fetch(SCRIPT_URL, {
     method: 'POST',
+    headers: { "Content-Type": "application/json" }, // <-- YE LINE ADD KAR
     body: JSON.stringify(data)
   })
-  .then(res => res.json()) // <-- json kar de
+  .then(res => res.json())
   .then(data => {
     document.getElementById("msg").innerText = "✅ Form Submitted Successfully!";
     document.getElementById("vendorForm").reset();
   })
+  .catch(err => {
+    document.getElementById("msg").innerText = "❌ Error! Try again.";
+  });
   .catch(err => {
     document.getElementById("msg").innerText = "Error! Try again.";
   });
