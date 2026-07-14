@@ -33,7 +33,11 @@ tr:nth-child(even){background:#f9f9f9;}
 <script>
 const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwLj0fdciYBXFqe-JsE0lyIrAhpSOUZK9Qp1HqKB0Wdyxgdqekk_MZS3d7RfxS4XFc4/exec";
 
-fetch(SCRIPT_URL + "?action=getVendors")
+fetch(SCRIPT_URL, {
+  method: "POST",
+  mode: "no-cors" // <-- YE LINE ADD KAR
+  body: JSON.stringify(formData)
+})
 .then(res => res.json())
 .then(data => {
   document.getElementById("loading").style.display = "none";
